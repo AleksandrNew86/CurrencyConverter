@@ -1,6 +1,6 @@
 import requests
 import json
-from config import available_currency
+from config import available_currency, API_KEY
 
 
 class APIException(Exception):
@@ -27,7 +27,7 @@ class GottenCurrency:
         except Exception:
             raise APIException("Количество первой валюты!")
         request_currency = requests.get(f'https://api.apilayer.com/fixer/convert?to={available_currency[quote][0]}\
-&from={available_currency[base][0]}&amount={amount}', {"apikey": 'wabT2uTsxApcWjQdCN1ukNf1vGupRhUz'}).content
+&from={available_currency[base][0]}&amount={amount}', API_KEY).content
         result_conversion = json.loads(request_currency)["result"]
         result = round(float(result_conversion), 2)
         if amount < 1:
